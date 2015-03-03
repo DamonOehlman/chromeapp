@@ -7,8 +7,8 @@ module.exports = function() {
     get: function(key, callback) {
       function getVal(cb) {
         if (isApp) {
-          return storage.get(key, function(values) {
-            cb(null, values[0]);
+          return storage.get(key, function(data) {
+            cb(null, data[key]);
           });
         }
 
