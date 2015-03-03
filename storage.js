@@ -5,13 +5,17 @@ module.exports = function() {
 
   return {
     get: function(key, callback) {
-      if (isApp) {
-        return storage.get(key, function(values) {
-          callback(null, values[0]);
-        });
+      function getVal(cb) {
+        if (isApp) {
+          return storage.get(key, function(values) {
+            cb(null, values[0]);
+          });
+        }
+
+        cb(null, storage.getItem(key));
       }
 
-      callback(null, storage.getItem(key));
+      return callback ? getVal(callback) : getVal;
     },
 
     set: function(key, val, callback) {
